@@ -1,0 +1,23 @@
+# Ignore cache, compiled files, and logs
+__pycache__/
+*.pyc
+*.pyo
+*.log
+*.csv
+
+# Ignore datasets and large files
+*.dat
+*.tokens
+
+# Ignore virtual environments
+env/
+.venv/
+*.conda
+*.h5
+*.pth
+
+# Ignore VS Code and Visual Studio files
+.vscode/
+.vs/
+*.sln
+*.vcxproj
