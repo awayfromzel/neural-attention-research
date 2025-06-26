@@ -1,5 +1,6 @@
 # neural-attention-research
 ## Table of Contents
+- [Research Paper](#research-paper)
 - [Installation](#installation)
 - [Project Structure](#project-structure)
 - [Downloading Required Datasets](#downloading-required-datasets)
@@ -9,6 +10,29 @@
 - [Vision Training Must-Know Information](#vision-training-must-know-information)
 - [Contributing](#contributing)
 - [License](#license)
+
+---
+
+## Research Paper
+
+This code is based on our research paper:
+
+**Neural Attention: A Novel Mechanism for Enhanced Expressive Power in Transformer Models**  
+Authors: Andrew DiGiugno, Ausif Mahmood  
+Published on arXiv: [arXiv:2502.17206](https://arxiv.org/abs/2502.17206)
+
+If you use this work, please consider citing:
+```bibtex
+@misc{digiugno2025neuralattentionnovelmechanism,
+      title={Neural Attention: A Novel Mechanism for Enhanced Expressive Power in Transformer Models}, 
+      author={Andrew DiGiugno and Ausif Mahmood},
+      year={2025},
+      eprint={2502.17206},
+      archivePrefix={arXiv},
+      primaryClass={cs.LG},
+      url={https://arxiv.org/abs/2502.17206}, 
+}
+```
 
 ---
 
@@ -35,7 +59,7 @@ pip install -r requirements.txt
 
 ---
 
-### Project Structure
+## Project Structure Overview
 ```sh
 neural-attention-research/
 │── nlp_neural_attention/
@@ -54,7 +78,7 @@ neural-attention-research/
 
 ---
 
-### Downloading Required Datasets
+## Downloading Required Datasets
 
 ### Wikitext-103 Dataset
 
@@ -84,33 +108,35 @@ These datasets will download automatically when running VisionTransformerAD_MAIN
 
 ---
 
-### Running the Code
+## Running the Code
 
-## NLP Neural Attention
+### NLP Neural Attention
 ```sh
 cd neural-attention-research/nlp_neural_attention
 python TransformerAD_WK103_Main.py
 ```
 
-## NLP Standard Attention
+### NLP Standard Attention
 ```sh
 cd neural-attention-research/nlp_standard_attention
 python TransformerAD_WK103_Main.py
 ```
 
-## Vision Neural Attention
+### Vision Neural Attention
 ```sh
 cd neural-attention-research/vision_neural_attention
 python VisionTransformerAD_MAIN.py
 ```
 
-## Vision Standard Attention
+### Vision Standard Attention
 ```sh
 cd neural-attention-research/vision_standard_attention
 python VisionTransformerAD_MAIN.py
 ```
 
-### Changing the Projection Dimension for Neural Attention
+---
+
+## Changing the Projection Dimension for Neural Attention
 
 In all four versions of the project there is a file called NeuralAttention.py in /Models
 In this file you will find the following at line 18 of code
@@ -122,7 +148,9 @@ For example, in the line above the projection dimension (called d' in the paper)
 Note that raising this projection dimension drastically increases memory requirements with not much gain in performance (as discussed in the paper)
 Currently, this number is set to 32 in all four versions of the project, making d'=2 for all versions by default.
 
-### NLP Training Must-Know Information
+---
+
+## NLP Training Must-Know Information
 
 Lines 20 through 28 of TransformerAD_WK103_Main.py in both NLP versions of the project allow the user to set values to control training.
 The default values in the project are shown below.
@@ -137,7 +165,10 @@ GENERATE_LENGTH = 512
 SEQ_LENGTH = 1024
 RESUME_TRAINING = False # set to false to start training from beginning
 ```
-### Vision Training Must-Know Information
+
+---
+
+## Vision Training Must-Know Information
 
 Lines 21 through 26 of the two Vision versions of the project allow the user to set values to control training.
 The default values in the project are shown below.
@@ -160,12 +191,16 @@ In line 119 of this file, you must ensure that dataset_type is set to the correc
 train_loader, val_loader, testset = Utils.get_loaders_cifar(dataset_type="CIFAR100", img_width=224, img_height=224, batch_size=BATCH_SIZE)
 ```
 
+---
+
 ## Contributing
 
 This project is a research implementation and is not actively accepting contributions at this time.  
 If you find issues or have suggestions, feel free to open an issue on GitHub.
 
-### License
+---
+
+## License
 
 This project is licensed under the terms of the [MIT License](LICENSE).
 
