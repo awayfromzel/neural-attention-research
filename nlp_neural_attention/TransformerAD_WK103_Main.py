@@ -242,13 +242,18 @@ def main():
             print(f'Inference Time: {inference_time:.6f} seconds')
             
             # Calculate inference time per sample
+			#NOTE: This is incorrect because it does not account for batch size. The total inference time was used to calculate the inference time per sample reported in the paper!
+			#The decision was made to leave the code as it was during our experiments and leave this comment in case anyone is curious after trying to recreate our results.
             num_sequences = len(val_dataset)  # Get the number of sequences in the validation set
-            inference_time_per_sample = inference_time / num_sequences
+            inference_time_per_sample = inference_time / num_sequences #This is the line that would need to be updated
             print(f'Inference Time per Sample: {inference_time_per_sample:.6f} seconds')
             
             print(f'Validation Set Size: {len(val_dataset)} sequences')
             
             # Track GPU memory usage
+			# NOTE: The memory usage per batch reported in the paper may not exactly match what is printed here.
+			# Due to the use of gradient accumulation during training, we adjusted the reported memory usage 
+			# after the fact for a fair, apples-to-apples comparison.
             memory_allocated = torch.cuda.memory_allocated()
             memory_reserved = torch.cuda.memory_reserved()
             print(f'GPU Memory Allocated: {memory_allocated / 1e6} MB')
@@ -296,7 +301,7 @@ def main():
             running_time=formatted_time,
             training_loss=recent_training_loss,
             val_loss=avg_val_loss,
-            perplexity=LAST_BEST_PERPLEXITY.item(),  # Convert the tensor to a float
+            perplexity=LAST_BEST_PERPLEXITY.item(),  # NOTE: This should be changed to report the *current* perplexity so that the data can be graphed similar to our paper. We used the log file to get the per-iteration perplexity for our graphs.
             learning_rate=current_lr,
             bpc=bpc2,
             throughput=throughput,
