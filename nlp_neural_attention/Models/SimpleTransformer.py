@@ -1,6 +1,7 @@
 import torch
 from torch import nn
-from Models.TransformerBlock import TransformerBlock
+from TransformerBlock import TransformerBlock
+from PositionalEncoding import PositionalEncoding
 
 class SimpleTransformer(nn.Module):
     def __init__(self, dim, num_layers, num_unique_tokens, heads, max_seq_len, dim_head=None, dim_linear_block=1024, dropout=0.1, causal=True):
@@ -8,7 +9,7 @@ class SimpleTransformer(nn.Module):
         self.max_seq_len = max_seq_len  # Add this line to store max_seq_len as an attribute
         self.causal=causal
         self.token_emb = nn.Embedding(num_unique_tokens, dim)
-        self.pos_emb = nn.Embedding(max_seq_len, dim)
+        self.pos_enc = PositionalEncoding(dim, max_seq_length=max_seq_len)
         self.layers = nn.ModuleList([])
 
         for i in range(num_layers):
@@ -31,7 +32,7 @@ class SimpleTransformer(nn.Module):
     def forward(self, x, mask=None):
         b, n = x.shape
         x = self.token_emb(x)
-        x += self.pos_emb(torch.arange(n, device=x.device))[None, :, :]
+        x += x + self.pos_enc(x)
         
         for layer in self.layers:
             x = layer(x, mask)
